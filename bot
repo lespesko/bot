@@ -1,0 +1,107 @@
+import telebot
+import requests
+from telebot import types
+
+BASE_URL = 'https://api.telegram.org/bot896345966:AAEI6SIOSUYsEfdj5mziSl-bbyuN3GDBRt8/'
+bot = telebot.TeleBot('896345966:AAEI6SIOSUYsEfdj5mziSl-bbyuN3GDBRt8')
+whitelist = ['747551719', '685592212']
+
+
+keyboard1 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard2 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard3 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard4 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard5 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard6 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard7 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard1.row('Оплата')
+keyboard1.row('Информация')
+keyboard1.row('Правила')
+keyboard2.row('Перед тем как начать!')
+keyboard2.row('Прочитал? Далее!')
+keyboard2.row('Назад')
+keyboard3.row('Подпишись!')
+keyboard3.row('Аирдропы')
+keyboard3.row('Новый проект [Горячее]')
+keyboard3.row('Софт [New Photoshop]', 'Назад')
+keyboard4.row('Горячее [New]')
+keyboard4.row('Холодные [New]')
+keyboard4.row('Архив', 'Назад')
+
+
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    bot.send_message(message.chat.id, 'Привет, ты написал мне /start', reply_markup=keyboard1)
+
+@bot.message_handler(content_types=['text'])
+def send_text(message):
+    id = str(message.chat.id)
+    file = open('text.txt', 'a')
+    file.write(id + '  ' )
+    if message.text.lower() == 'оплата':
+        bot.send_message(message.chat.id, 'FreeKassa')
+    elif message.text.lower() == 'правила':
+        bot.send_message(message.chat.id, '1.Слив какой либо информации (СОФТ,ПАРОЛИ,МЕТОДЫ И ТД И ТП) будет караться ВЕЧНЫМ киком - если вы пришли с форума ( арбитражем на форуме )\r\n'
+                                          '2.Подписка в месяц стоит 500 р. Кто не оплатил всю сумму\кто не платил вообще - с профитов обязательно отдать.\r\n'
+                                          '*2П. Не относится к тем кто :\r\n'
+                                          '1.Уже оплатил\r\n'
+                                          '2.Пришел с канала Гэтсби\r\n'
+                                          '3.К нашим умопомрачительным дамам : @Gestra26 , @la_muza , @svetik_plechko \r\n')
+    elif message.text.lower() == 'информация':
+        if id in whitelist:
+            bot.send_message(message.chat.id, 'Go back', reply_markup=keyboard2)
+        else:
+            def ban():
+                bot.send_message(message.chat.id, 'Забанен')
+
+            ban()
+    elif message.text.lower() == 'перед тем как начать':
+        bot.send_message(message.chat.id, '.')
+    elif message.text.lower() == 'прочитал? далее!':
+         bot.send_message(message.chat.id, 'Прочитал? Далее!', reply_markup=keyboard3)
+    elif message.text.lower() == 'аирдропы':
+        bot.send_message(message.chat.id, '.', reply_markup=keyboard4)
+    elif message.text == 'Горячее [New]':
+        def switch(message):
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            markup_two = types.InlineKeyboardMarkup()
+            max_button = types.InlineKeyboardButton (text='Gost [Вложения + Пассив]', url="https://t.me/joinchat/AAAAAEzrPqhC_ls4MliJ3A")
+            second_button = types.InlineKeyboardButton(text='Gost [Bither [Уже erc20]]', url="https://t.me/joinchat/AAAAAFCW21iThpTwHOY7jw")
+            third_button = types.InlineKeyboardButton(text='Bybit [ХАРД]', url='https://t.me/joinchat/AAAAAE4EQTuyvobPndfb6w')
+            four_button = types.InlineKeyboardButton(text='999dice [универсальный бот]', url='https://t.me/joinchat/AAAAAExOzBF4YxQSPSuGHw')
+            markup.add( second_button,third_button, four_button , max_button)
+            bot.send_message(message.chat.id, "Горячее", reply_markup=markup)
+        switch(message)
+    elif message.text == 'Холодные [New]':
+        def switch(message):
+            markup = types.InlineKeyboardMarkup()
+            markup_two = types.InlineKeyboardMarkup()
+            switch_button = types.InlineKeyboardButton(text='T******[Прибыльный]', switch_inline_query="https://t.me/@Bot7634_bot")
+            second_button = types.InlineKeyboardButton(text='A******[Закрыто]', url="https://t.me/@Bot7634_bot")
+            third_button = types.InlineKeyboardButton(text='F******[Прибыльный]', url='https://t.me/@Bot7634_bot')
+            markup.add(switch_button, second_button, third_button)
+            bot.send_message(message.chat.id, "Выбрать чат", reply_markup=markup)
+        switch(message)
+    elif message.text == 'Новый проект [Горячее]':
+        bot.send_message(message.chat.id, '.')
+    elif message.text == 'Софт [New Photoshop]':
+        def switch(message):
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            markup_two = types.InlineKeyboardMarkup()
+            switch_button = types.InlineKeyboardButton(text='Кряк на сферу', switch_inline_query="https://t.me/@Bot7634_bot")
+            second_button = types.InlineKeyboardButton(text='Мозилла', url="https://t.me/@Bot7634_bot")
+            third_button = types.InlineKeyboardButton(text='Акки NordVPN', url='https://t.me/@Bot7634_bot')
+            four_button = types.InlineKeyboardButton(text='Сервисы для покупки номеров', url='https://t.me/@Bot7634_bot')
+            markup.add(switch_button, second_button, third_button, four_button)
+            bot.send_message(message.chat.id, "Выбрать чат", reply_markup=markup)
+
+        switch(message)
+    elif message.text.lower() == 'назад':
+        bot.send_message(message.chat.id, 'Go back', reply_markup=keyboard1)
+
+
+
+
+
+bot.polling()
